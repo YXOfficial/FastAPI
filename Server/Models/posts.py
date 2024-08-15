@@ -15,6 +15,6 @@ class posts(Base):
         onupdate=func.now(),
         server_onupdate=func.now()
     )
-    public = Column(String(50), nullable=False)
+    share = Column(String(50), nullable=False)
     friendonly = Column(String(50), nullable=False)
-# Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)

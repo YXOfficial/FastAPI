@@ -11,7 +11,7 @@ NotFound = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
 
 @app.post("/posts")
 def create(data: Title, user=Depends(get_current_user)):
-    newpost = posts(Creator=user.username, title=data.title, content=data.content, email=user.email, public=data.public, friendonly=data.friendonly)
+    newpost = posts(Creator=user.username, title=data.title, content=data.content, email=user.email, share=data.share, friendonly=data.friendonly)
     db.add(newpost)
     db.commit()
     return {"Detail": "Post created successfully"}

@@ -10,7 +10,7 @@ NotFound = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
 @app.get("/")
 def main():
     try:
-        list = db.query(posts).filter(posts.public == "1").all()
+        list = db.query(posts).filter(posts.share == True).all()
         if list == None:
             raise NotFound
     except Exception as e:
