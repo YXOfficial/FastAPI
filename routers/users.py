@@ -31,12 +31,14 @@ def login(data: Annotated[Login, Depends(CheckUserLogin)], response: Response):
         ServerEmail = db.query(User).filter(User.email == email).first()
         if data.get("password") == ServerEmail.password:
             if not ServerEmail.Token:
-                access_token = CreateEncodedToken(email)
+                access_token = CreateEncodedToken(data)
                 ServerEmail.Token = access_token
                 db.commit()
+                response.set_cookie(key="access_token", value=access_token, httponly=True)
+                return {"access_token": access_token, "token_type": "bearer"}
             else:
                 access_token = ServerEmail.Token
-                RefreshToken = CreateRefreshToken(data)
+                # RefreshToken = CreateRefreshToken(data)
                 response.set_cookie(key="access_token", value=access_token, httponly=True)
             return {"access_token": access_token, "token_type": "bearer"}
         else:

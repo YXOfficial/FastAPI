@@ -26,16 +26,6 @@ def list(user=Depends(get_current_user)):
         raise NotFound
     return list
 
-@app.get("/posts/{id}")
-def list(id, user=Depends(get_current_user)):
-    try:
-        list = db.query(posts).filter(posts.id == int(id) and posts.email == user.email).first()
-        if list == None:
-            raise NotFound
-    except Exception as e:
-        raise NotFound
-    return list
-
 @app.delete("/posts/{id}")
 def delete(id, user=Depends(get_current_user)):
     try:
@@ -56,6 +46,8 @@ def update(id, data: Title, user=Depends(get_current_user)):
             raise NotFound
         newpost.title = data.title
         newpost.content = data.content
+        newpost.share = data.share
+        newpost.friendonly = data.friendonly
         db.commit()
     except Exception as e:
         raise NotFound
