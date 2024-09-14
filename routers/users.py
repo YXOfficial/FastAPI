@@ -10,7 +10,7 @@ from Server.Models.User import User
 app = APIRouter()
 
 
-@app.post("/user/register")
+@app.post("/user/register", tags=["user"])
 def Register(data: Annotated[Register, Depends(CheckUserRegister)]):
     try:
         validate_password(data.get("password"))
@@ -24,7 +24,7 @@ def Register(data: Annotated[Register, Depends(CheckUserRegister)]):
             detail=str(e),
         )
 
-@app.post("/user/login")
+@app.post("/user/login", tags=["user"])
 def login(data: Annotated[Login, Depends(CheckUserLogin)], response: Response):
     try:
         email = data.get("email")
@@ -51,10 +51,10 @@ def login(data: Annotated[Login, Depends(CheckUserLogin)], response: Response):
         )
 
 
-@app.get("/users/me")
+@app.get("/users/me", tags=["user"])
 def home(user=Depends(get_current_user)):
         return {"Hello": user.username}
 
-@app.get("/logout")
+@app.get("/logout", tags=["user"])
 def logout(response: Response):
         return response.delete_cookie("access_token")

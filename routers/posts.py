@@ -9,14 +9,14 @@ app = APIRouter()
 NotFound = HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                          detail="Not found")
 
-@app.post("/posts")
+@app.post("/posts", tags=["user"])
 def create(data: Title, user=Depends(get_current_user)):
     newpost = posts(Creator=user.username, title=data.title, content=data.content, email=user.email, share=data.share, friendonly=data.friendonly)
     db.add(newpost)
     db.commit()
     return {"Detail": "Post created successfully"}
 
-@app.get("/posts")
+@app.get("/posts", tags=["user"])
 def list(user=Depends(get_current_user)):
     try:
         list = db.query(posts).filter(posts.email == user.email).all()
@@ -26,7 +26,7 @@ def list(user=Depends(get_current_user)):
         raise NotFound
     return list
 
-@app.delete("/posts/{id}")
+@app.delete("/posts/{id}", tags=["user"])
 def delete(id, user=Depends(get_current_user)):
     try:
         list = db.query(posts).filter(posts.id == id and posts.email == user.email).first()
@@ -38,7 +38,7 @@ def delete(id, user=Depends(get_current_user)):
         raise NotFound
     return {"Deteled": id}
 
-@app.put("/posts/{id}")
+@app.put("/posts/{id}", tags=["user"])
 def update(id, data: Title, user=Depends(get_current_user)):
     try:
         newpost = db.query(posts).filter(posts.id == int(id) and posts.email == user.email).first()

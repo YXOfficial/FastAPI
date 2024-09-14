@@ -31,6 +31,7 @@ def CreateRefreshToken(data):
     return encoded_jwt
 def DecodeToken(token):
     payload = jwt.decode(token, SECRET_KEY, algorithms="HS256")
+    print(payload)
     return payload
 
 # e = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnbWFpbCI6InRoZTY2Nmtob2FAZ21haWwuY29tIiwicGFzc3dvcmQiOiJ0ZXN0In0.AmXUmd8Wca-6SlC0KFXW5uDwGHDMPscXBwRQ8H4QQFI"

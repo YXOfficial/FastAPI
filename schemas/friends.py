@@ -1,4 +1,5 @@
 from pydantic import BaseModel
-
-class addfriend(BaseModel):
-    email: int
+from typing import Optional
+class FriendRequestAccept(BaseModel):
+    username: str
+    status: Optional[bool] = None

@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String
 from ORMDatabases import Base, engine
 
 
-class User(Base):
-    __tablename__ = 'USERS'
+class Moderator(Base):
+    __tablename__ = 'Moderators'
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(50), unique=True, nullable=False)
     username = Column(String(50), unique=True, nullable=False)
